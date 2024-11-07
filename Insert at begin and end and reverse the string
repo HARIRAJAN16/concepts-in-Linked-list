@@ -1,0 +1,103 @@
+
+#include <bits/stdc++.h>
+using namespace std;
+
+class Node {
+public:
+    int key;
+    Node* next;
+};
+
+Node* newnode(int data) {
+    Node* n = new Node();
+    n->key = data;
+    n->next = NULL;
+    return n;
+}
+
+Node* insert_begin(int data, Node* head) {
+    Node* nn = newnode(data);
+    nn->next = head;
+    head = nn;
+    return head;
+}
+
+Node* insert_end(int data, Node* head) {
+    Node* nn = newnode(data);
+    if (head == NULL) {
+        head = nn;
+    } else {
+        Node* temp = head;
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = nn;
+    }
+    return head;
+}
+
+Node* insert_mid(int data, Node* head, int pos) {
+    Node* nn = newnode(data);
+    if (head == NULL) {
+        head = nn;
+    } else {
+        int count = 1;
+        Node* temp = head;
+        while (temp->next != NULL) {
+            count++;
+            if (count == pos) {
+                break;
+            }
+            temp = temp->next;
+        }
+        if (count == pos) {
+            nn->next = temp->next;
+            temp->next = nn;
+        } else {
+            cout << "Invalid position";
+        }
+    }
+    return head;
+}
+
+void display(Node* head) {
+    Node* temp = head;
+    while (temp != NULL) {
+        cout << temp->key << "->";
+        temp = temp->next;
+    }
+    cout << "NULL" << endl;
+}
+
+Node* reverse(Node* head) {
+    Node *temp1 = NULL, *temp2 = head, *temp3;
+    if (head == NULL) {
+        cout << "List empty";
+    } else if (head->next == NULL) {
+        cout << "List contains one value";
+    } else {
+        temp3 = head->next;
+        while (temp3 != NULL) {
+            temp2->next = temp1;
+            temp1 = temp2;
+            temp2 = temp3;
+            temp3 = temp3->next;
+        }
+        temp2->next = temp1;
+        head = temp2;
+    }
+    return head;
+}
+
+int main() {
+    Node* head = NULL;
+    head = insert_begin(30, head);
+    head = insert_begin(20, head);
+    head = insert_begin(10, head);
+    head = insert_begin(5, head);
+    head = insert_end(40, head);
+    head = insert_mid(50, head, 3);
+    display(head);
+    head = reverse(head);
+    display(head);
+}
